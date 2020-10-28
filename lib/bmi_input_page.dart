@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import './widgets/bmi_card_box.dart';
+import './widgets/column_icon_label.dart';
+import './bmi_calculator.dart';
+
 const bottomContainerColor = Color(0xFFEB1555);
 const bottomContainerHeight = 80.0;
 const appBarTitle = 'BMI Calculator';
@@ -13,6 +17,8 @@ class BMIInputPage extends StatefulWidget {
 }
 
 class _BMIInputPageState extends State<BMIInputPage> {
+  final bmiCalculator = BMICalculator();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,18 +29,26 @@ class _BMIInputPageState extends State<BMIInputPage> {
             child: Row(
               children: [
                 Expanded(
-                  child: BMICardBox(
-                    child: ColumnIconLabel(
-                      label: "male",
-                      icon: FontAwesomeIcons.mars,
+                  child: GestureDetector(
+                    onTap: () => setState(() => bmiCalculator.setMale()),
+                    child: BMICardBox(
+                      isSelected: bmiCalculator.isMale(),
+                      child: ColumnIconLabel(
+                        label: BMICalculator.male,
+                        icon: FontAwesomeIcons.mars,
+                      ),
                     ),
                   ),
                 ),
                 Expanded(
-                  child: BMICardBox(
-                    child: ColumnIconLabel(
-                      label: "female",
-                      icon: FontAwesomeIcons.venus,
+                  child: GestureDetector(
+                    onTap: () => setState(() => bmiCalculator.setFemale()),
+                    child: BMICardBox(
+                      isSelected: bmiCalculator.isFemale(),
+                      child: ColumnIconLabel(
+                        label: BMICalculator.female,
+                        icon: FontAwesomeIcons.venus,
+                      ),
                     ),
                   ),
                 )
@@ -54,51 +68,6 @@ class _BMIInputPageState extends State<BMIInputPage> {
             width: double.infinity,
           )
         ],
-      ),
-    );
-  }
-}
-
-class ColumnIconLabel extends StatelessWidget {
-  ColumnIconLabel({@required this.label, @required this.icon});
-
-  final String label;
-  final IconData icon;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(icon, size: 80.0),
-        SizedBox(height: 15.0),
-        Text(
-          label.toUpperCase(),
-          style: TextStyle(
-            fontSize: 18.0,
-            color: Color(0xFF8D8E98),
-          ),
-        )
-      ],
-    );
-  }
-}
-
-const activeCardColor = Color(0XFF1D1F33);
-
-class BMICardBox extends StatelessWidget {
-  BMICardBox({this.child});
-
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: child,
-      margin: EdgeInsets.all(15.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: activeCardColor,
       ),
     );
   }
