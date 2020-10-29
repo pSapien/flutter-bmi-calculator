@@ -19,11 +19,9 @@ class BMICalculator {
   double getMaxHeight() => _maxHeight;
   double getMinHeight() => _minHeight;
 
-  void incWeight() => _weight++;
-  void decWeight() => _weight--;
   int getWeight() => _weight;
+  void setWeight(userWeight) => _weight = userWeight;
 
-  void incAge() => _age++;
-  void decAge() => _age--;
   int getAge() => _age;
+  void setAge(userAge) => _age = userAge;
 }

@@ -41,23 +41,27 @@ class _BMIInputPageState extends State<BMIInputPage> {
           Expanded(
             child: Row(
               children: [
-                GestureDetector(
-                  onTap: () => setState(bmiCalculator.setMale),
-                  child: BMICardBox(
-                    isSelected: bmiCalculator.isMale(),
-                    child: ColumnIconLabel(
-                      label: BMICalculator.male,
-                      icon: FontAwesomeIcons.mars,
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () => setState(bmiCalculator.setMale),
+                    child: BMICardBox(
+                      isSelected: bmiCalculator.isMale(),
+                      child: ColumnIconLabel(
+                        label: BMICalculator.male,
+                        icon: FontAwesomeIcons.mars,
+                      ),
                     ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () => setState(bmiCalculator.setFemale),
-                  child: BMICardBox(
-                    isSelected: bmiCalculator.isFemale(),
-                    child: ColumnIconLabel(
-                      label: BMICalculator.female,
-                      icon: FontAwesomeIcons.venus,
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () => setState(bmiCalculator.setFemale),
+                    child: BMICardBox(
+                      isSelected: bmiCalculator.isFemale(),
+                      child: ColumnIconLabel(
+                        label: BMICalculator.female,
+                        icon: FontAwesomeIcons.venus,
+                      ),
                     ),
                   ),
                 )
@@ -110,12 +114,16 @@ class _BMIInputPageState extends State<BMIInputPage> {
           Expanded(
             child: Row(
               children: [
-                BMICardBox(
-                  child: null,
+                LabelValueCounter(
+                  label: 'WEIGHT',
+                  value: bmiCalculator.getWeight(),
+                  onSet: (v) => setState(() => bmiCalculator.setWeight(v)),
                 ),
-                BMICardBox(
-                  child: null,
-                ),
+                LabelValueCounter(
+                  label: 'AGE',
+                  value: bmiCalculator.getAge(),
+                  onSet: (v) => setState(() => bmiCalculator.setAge(v)),
+                )
               ],
             ),
           ),
@@ -124,6 +132,49 @@ class _BMIInputPageState extends State<BMIInputPage> {
             height: bottomContainerHeight,
             margin: EdgeInsets.only(top: 10.0),
             width: double.infinity,
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class LabelValueCounter extends StatelessWidget {
+  final String label;
+  final int value;
+  final Function onSet;
+
+  const LabelValueCounter({
+    this.label,
+    this.value,
+    this.onSet,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BMICardBox(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(label, style: labelStyle),
+          SizedBox(height: gapBetweenSizeAndValue),
+          Text(value.toString(), style: valueStyle),
+          SizedBox(height: gapBetweenSizeAndValue),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              FloatingActionButton(
+                child: Icon(Icons.remove, color: Colors.white),
+                backgroundColor: Color(0xFF1C1F32),
+                onPressed: () => onSet(value + 1),
+              ),
+              SizedBox(width: gapBetweenSizeAndValue),
+              FloatingActionButton(
+                child: Icon(Icons.add, color: Colors.white),
+                backgroundColor: Color(0xFF1C1F32),
+                onPressed: () => onSet(value - 1),
+              ),
+            ],
           )
         ],
       ),
