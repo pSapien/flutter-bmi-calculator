@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import './widgets/bmi_card_box.dart';
 import './widgets/column_icon_label.dart';
 import './bmi_calculator.dart';
+import './bmi_results_page.dart';
 
 const bottomContainerColor = Color(0xFFEB1555);
 const bottomContainerHeight = 80.0;
@@ -127,11 +128,28 @@ class _BMIInputPageState extends State<BMIInputPage> {
               ],
             ),
           ),
-          Container(
-            color: bottomContainerColor,
-            height: bottomContainerHeight,
-            margin: EdgeInsets.only(top: 10.0),
-            width: double.infinity,
+          InkWell(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) {
+                  return Scaffold(
+                    appBar: AppBar(title: Text('Saved')),
+                  );
+                }),
+              );
+            },
+            child: Container(
+              color: bottomContainerColor,
+              height: bottomContainerHeight,
+              margin: EdgeInsets.only(top: 10.0),
+              width: double.infinity,
+              child: Center(
+                child: Text(
+                  'CALCULATE YOUR BMI',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+            ),
           )
         ],
       ),
